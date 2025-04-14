@@ -63,15 +63,9 @@ def register_page():
             'isBulkBuyer': form.Bulk.data,
             'tickets' : []
         }
-        usr = dbGetUser(db, email=form.Email.data)#Checks if user already excists
         
-        # display error message if user has existing email in the system 
-        # (usr results to true)
-        if usr:
-            flash('Email already used! Please try again.', category='danger')
-            return render_template("/register.html", form=form)
         
-        session['user']= usr#creates session for user
+        session['user']= d#creates session for user
         dbCreateUser(db, d)#stores user to database
         flash(f'Account created. Pls login to feel the wrath fo the Vortex 🌪️.',category='success')
         return redirect(url_for("market_page"))
@@ -97,14 +91,8 @@ def merchantRegisterPage():
             'email': form.Email.data,
             'concerts' : []
         }
-        usr = dbGetMerchant(db, email=form.Email.data)#checks if merchant is in database
-        # display error message if user has existing email in the system 
-        # (usr results to true)
-        if usr:
-            flash('Email already used! Please try again.', category='danger')
-            return render_template("/merchantRegister.html", form=form)
         
-        session['user']= usr#create sessions and stores to database
+        session['user']= d#create sessions and stores to database
         dbCreateMerchant(db, d)
 
         return redirect(url_for("market_page"))
